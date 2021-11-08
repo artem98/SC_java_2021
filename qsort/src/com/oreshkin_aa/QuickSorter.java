@@ -5,11 +5,20 @@ import java.util.Comparator;
 public class QuickSorter {
 
     public static <T> void insertionSort(T[] arr, Comparator<T> comparator) {
-
         for (int end = 1; end < arr.length; end++) {
             int insertPos = binSearch(arr, 0, end, arr[end], comparator);
+            cycleShift(arr, insertPos, end);
         }
     }
+
+    private static <T> void cycleShift(T[] arr, int start, int end) {
+        T tmp;
+        tmp = arr[end];
+        for (int i = end; i > start; i--)
+            arr[i] = arr[i - 1];
+        arr[start] = tmp;
+    }
+
 
     public static <T> void qSort(T[] arr, Comparator<T> comparator) {
 
