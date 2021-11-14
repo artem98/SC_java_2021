@@ -1,5 +1,6 @@
 package com.oreshkin_aa;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class QuickSorter {
@@ -19,11 +20,6 @@ public class QuickSorter {
         arr[start] = tmp;
     }
 
-
-    public static <T> void qSort(T[] arr, Comparator<T> comparator) {
-
-    }
-
     public static <T> int binSearch(T[] arr, int start, int end, T elem, Comparator<T> comparator) {
         if (end <= start)
             return -1;
@@ -38,4 +34,25 @@ public class QuickSorter {
         }
         return pos;
     }
+
+    public static <T> void qSort(T[] arr, Comparator<T> comparator) {
+
+    }
+
+    public static <T> int split(T[] arr, T val, Comparator<T> comparator) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        T tmp;
+        while (left < right) {
+            for(;left < right && comparator.compare(arr[left], val) <= 0; left++);
+            for(;left < right && comparator.compare(arr[right], val) > 0; right--);
+
+            tmp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = tmp;
+        }
+        return left;
+    }
+
 }
