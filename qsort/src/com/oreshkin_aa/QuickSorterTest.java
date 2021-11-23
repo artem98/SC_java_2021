@@ -1,5 +1,7 @@
 package com.oreshkin_aa;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,8 +27,24 @@ class QuickSorterTest {
         mIntSamples.add(new Integer[]{7, 7, 7, 8, 8, 8, 8});
         mIntSamples.add(new Integer[]{7, -1, 3, 0, 11, 1000, 3, -2, 4, 12, 14, 2, -2, 1000, 7});
         mIntSamples.add(new Integer[]{6, 9, 1, 5, -2, 9, 4, 9, 0, 3});
+        mIntSamples.add(new Integer[]{6, 6, 6, 5, -2, 6, 6, 6, 6, 6});
     }
 
+    @org.junit.jupiter.api.Test
+    void qsort() {
+        prepareSamples();
+
+        for (int id = 0; id < mIntSamples.size(); id++) {
+            Integer[] actual = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
+            Integer[] expected = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
+
+            QuickSorter.insertionSort(actual, Integer::compareTo);
+            Arrays.sort(expected, Integer::compareTo);
+
+            System.out.println(id);
+            assertArrayEquals(expected, actual);
+        }
+    }
 
     @org.junit.jupiter.api.Test
     void insertionSort() {
@@ -43,10 +61,6 @@ class QuickSorterTest {
             System.out.println(id);
             assertArrayEquals(expected, actual);
         }
-    }
-
-    @org.junit.jupiter.api.Test
-    void qSort() {
     }
 
     Integer[] getIntArray(int id) {

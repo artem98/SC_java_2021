@@ -36,21 +36,59 @@ public class QuickSorter {
     }
 
     public static <T> void qSort(T[] arr, Comparator<T> comparator) {
-
+        qSort(arr, comparator, 0, arr.length);
     }
 
-    public static <T> int split(T[] arr, T val, Comparator<T> comparator) {
-        int left = 0;
-        int right = arr.length - 1;
+    private static <T> void qSort(T[] arr, Comparator<T> comparator, int start, int end) {
+        int splitPos;
+        T splitVal;
+
+        int left = start;
+        int right = end;
+        int splittingBorder;
+
+        while (left < right - 1) {
+            splitPos = selectSplittingElem(arr, left, right);
+            splitVal = arr[splitPos];
+            splittingBorder = split(arr, splitVal, comparator, left, right);
+
+            Main.printArr(arr);
+
+            System.out.println("   " + left + " " + right);
+
+            int len1 = splittingBorder - left;
+            int len2 = right - splittingBorder;
+            if(len1 < len2) {
+                qSort(arr, comparator, left, splittingBorder);
+                left = splittingBorder;
+            }
+            else {
+                qSort(arr, comparator, splittingBorder, right);
+                right = splittingBorder;
+            }
+        }
+    }
+
+    private static <T> int selectSplittingElem(T[] arr, int left, int right) {
+        return (left + right) / 2;
+    }
+
+    public static <T> int split(T[] arr, T val, Comparator<T> comparator, int start, int end) {
+        int left = start;
+        int right = end - 1;
 
         T tmp;
         while (left < right) {
-            for(;left < right && comparator.compare(arr[left], val) <= 0; left++);
+            for(;left < right && comparator.compare(arr[left], val) < 0; left++);
             for(;left < right && comparator.compare(arr[right], val) > 0; right--);
+            if (left == right)
+                return left;
 
             tmp = arr[left];
             arr[left] = arr[right];
             arr[right] = tmp;
+            left++;
+            right--;
         }
         return left;
     }
