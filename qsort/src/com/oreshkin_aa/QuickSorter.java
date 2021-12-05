@@ -5,6 +5,8 @@ import java.util.Comparator;
 
 public class QuickSorter {
 
+    private final static int INSERT_SWITCH_LEN = 16;
+
     public static <T> void insertionSort(T[] arr, Comparator<T> comparator) {
         for (int end = 1; end < arr.length; end++) {
             int insertPos = binSearch(arr, 0, end, arr[end], comparator);
@@ -33,6 +35,13 @@ public class QuickSorter {
             pos = (start + end) / 2;
         }
         return pos;
+    }
+
+    public static <T> void sort(T[] arr, Comparator<T> comparator) {
+        if(arr.length > INSERT_SWITCH_LEN)
+            qSort(arr, comparator);
+        else
+            insertionSort(arr, comparator);
     }
 
     public static <T> void qSort(T[] arr, Comparator<T> comparator) {
