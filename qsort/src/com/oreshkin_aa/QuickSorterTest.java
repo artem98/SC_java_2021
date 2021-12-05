@@ -13,8 +13,12 @@ class QuickSorterTest {
     private ArrayList<Integer[]> mIntSamples;
     private ArrayList<Double[]> mDoubleSamples;
 
-    private Double[] createRandomDoubleArray(Random random) {
+    private static Double[] createRandomDoubleArray(Random random) {
         int len = Math.abs(random.nextInt()) % 1000 + 1;
+        return createRandomDoubleArray(random, len);
+    }
+
+    private static Double[] createRandomDoubleArray(Random random, int len) {
         Double[] array = new Double[len];
 
         for(int i = 0; i < len; i++)
@@ -113,6 +117,30 @@ class QuickSorterTest {
 
             assertArrayEquals(expected, actual);
         }
+    }
+
+    public static void testComparesCount() {
+        Double[] array = createRandomDoubleArray(new Random(105), 10000);
+
+        ComparatorCounter<Double> comparatorCounter = new ComparatorCounter<>();
+
+        QuickSorter.insertionSort(array, comparatorCounter);
+        int insertCompNum = comparatorCounter.getComparesCount();
+        comparatorCounter.clearCount();
+
+        QuickSorter.qSort(array, comparatorCounter);
+        int quickCompNum = comparatorCounter.getComparesCount();
+        comparatorCounter.clearCount();
+
+        Arrays.sort(array, comparatorCounter);
+        int etalonCompNum = comparatorCounter.getComparesCount();
+        comparatorCounter.clearCount();
+
+
+        System.out.println(
+                "Insert compares count: " + insertCompNum + "\n" +
+                "Qsort compares count:  " + quickCompNum + "\n" +
+                "Etalon compares count: " + etalonCompNum);
     }
 
 }

@@ -18,11 +18,15 @@ public class ComparatorCounter<T extends Comparable<T>> implements java.util.Com
         mIsDefaultCompare = false;
     }
 
+    public void clearCount() {
+        mComparesCount = 0;
+    }
 
-    public void clearCount() { mComparesCount = 0; }
     public int getComparesCount() {
         return mComparesCount;
     }
+
+    @Deprecated
     public void setComparesCount(int mComparesCount) {
         this.mComparesCount = mComparesCount;
     }
