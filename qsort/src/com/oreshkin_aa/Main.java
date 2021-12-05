@@ -15,6 +15,11 @@ public class Main {
     }
 
     public static <T> void printArr(T[] arr) {
+        if(arr.length == 0) {
+            System.out.println("[]");
+            return;
+        }
+
         System.out.print("[");
         for(int i = 0; i < arr.length - 1; i++)
             System.out.print(arr[i] + ", ");
