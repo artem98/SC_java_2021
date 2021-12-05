@@ -52,10 +52,6 @@ public class QuickSorter {
             splitVal = arr[splitPos];
             splittingBorder = split(arr, splitVal, comparator, left, right);
 
-            Main.printArr(arr);
-
-            System.out.println("   " + left + " " + right);
-
             int len1 = splittingBorder - left;
             int len2 = right - splittingBorder;
             if(len1 < len2) {
@@ -78,10 +74,10 @@ public class QuickSorter {
         int right = end - 1;
 
         T tmp;
-        while (left < right) {
-            for(;left < right && comparator.compare(arr[left], val) < 0; left++);
-            for(;left < right && comparator.compare(arr[right], val) > 0; right--);
-            if (left == right)
+        while(left <= right) {
+            for(;comparator.compare(arr[left], val) < 0; left++);
+            for(;comparator.compare(arr[right], val) > 0; right--);
+            if (left >= right)
                 return left;
 
             tmp = arr[left];
