@@ -4,12 +4,23 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuickSorterTest {
 
     private ArrayList<Integer[]> mIntSamples;
+    private ArrayList<Double[]> mDoubleSamples;
+
+    private Double[] createRandomDoubleArray(Random random) {
+        int len = Math.abs(random.nextInt()) % 1000 + 1;
+        Double[] array = new Double[len];
+
+        for(int i = 0; i < len; i++)
+            array[i] = random.nextDouble();
+        return array;
+    }
 
     public void prepareSamples() {
         mIntSamples = new ArrayList<>();
@@ -28,6 +39,37 @@ class QuickSorterTest {
         mIntSamples.add(new Integer[]{7, -1, 3, 0, 11, 1000, 3, -2, 4, 12, 14, 2, -2, 1000, 7});
         mIntSamples.add(new Integer[]{6, 9, 1, 5, -2, 9, 4, 9, 0, 3});
         mIntSamples.add(new Integer[]{6, 6, 6, 5, -2, 6, 6, 6, 6, 6});
+
+        mDoubleSamples = new ArrayList<>();
+        Random random = new Random(0);
+        for(int i = 0; i < 50; i++) {
+            mDoubleSamples.add(createRandomDoubleArray(random));
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void sort() {
+        prepareSamples();
+
+        for (int id = 0; id < mIntSamples.size(); id++) {
+            Integer[] actual = Arrays.copyOf(mIntSamples.get(id), mIntSamples.get(id).length);
+            Integer[] expected = Arrays.copyOf(mIntSamples.get(id),mIntSamples.get(id).length);
+
+            QuickSorter.sort(actual, Integer::compareTo);
+            Arrays.sort(expected, Integer::compareTo);
+
+            assertArrayEquals(expected, actual);
+        }
+
+        for (int id = 0; id < mDoubleSamples.size(); id++) {
+            Double[] actual = Arrays.copyOf(mDoubleSamples.get(id), mDoubleSamples.get(id).length);
+            Double[] expected = Arrays.copyOf(mDoubleSamples.get(id), mDoubleSamples.get(id).length);
+
+            QuickSorter.sort(actual, Double::compareTo);
+            Arrays.sort(expected, Double::compareTo);
+
+            assertArrayEquals(expected, actual);
+        }
     }
 
     @org.junit.jupiter.api.Test
@@ -35,13 +77,24 @@ class QuickSorterTest {
         prepareSamples();
 
         for (int id = 0; id < mIntSamples.size(); id++) {
-            Integer[] actual = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
-            Integer[] expected = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
+            System.out.println(id);
+            Integer[] actual = Arrays.copyOf(mIntSamples.get(id), mIntSamples.get(id).length);
+            Integer[] expected = Arrays.copyOf(mIntSamples.get(id), mIntSamples.get(id).length);
 
-            QuickSorter.insertionSort(actual, Integer::compareTo);
+            QuickSorter.qSort(actual, Integer::compareTo);
             Arrays.sort(expected, Integer::compareTo);
 
-            System.out.println(id);
+            Main.printArr(mIntSamples.get(id));
+            assertArrayEquals(expected, actual);
+        }
+
+        for (int id = 0; id < mDoubleSamples.size(); id++) {
+            Double[] actual = Arrays.copyOf(mDoubleSamples.get(id), mDoubleSamples.get(id).length);
+            Double[] expected = Arrays.copyOf(mDoubleSamples.get(id), mDoubleSamples.get(id).length);
+
+            QuickSorter.qSort(actual, Double::compareTo);
+            Arrays.sort(expected, Double::compareTo);
+
             assertArrayEquals(expected, actual);
         }
     }
@@ -52,20 +105,14 @@ class QuickSorterTest {
         prepareSamples();
 
         for (int id = 0; id < mIntSamples.size(); id++) {
-            Integer[] actual = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
-            Integer[] expected = Arrays.copyOf(getIntArray(id), getIntArray(id).length);
+            Integer[] actual = Arrays.copyOf(mIntSamples.get(id), mIntSamples.get(id).length);
+            Integer[] expected = Arrays.copyOf(mIntSamples.get(id), mIntSamples.get(id).length);
 
             QuickSorter.insertionSort(actual, Integer::compareTo);
             Arrays.sort(expected, Integer::compareTo);
 
-            System.out.println(id);
             assertArrayEquals(expected, actual);
         }
     }
 
-    Integer[] getIntArray(int id) {
-        final int len = mIntSamples.size();
-        id = id % len;
-        return mIntSamples.get(id);
-    }
 }
