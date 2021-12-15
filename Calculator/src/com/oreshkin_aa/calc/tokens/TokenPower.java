@@ -13,7 +13,7 @@ public class TokenPower extends TokenBinary {
 
     @Override
     protected void setPriority() {
-        priority = new Priority(false, true, 3);
+        priority = new Priority(false, true, 4);
     }
 
     @Override
