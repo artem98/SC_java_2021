@@ -136,7 +136,6 @@ class QuickSorterTest {
         int etalonCompNum = comparatorCounter.getComparesCount();
         comparatorCounter.clearCount();
 
-
         System.out.println(
                 "Insert compares count: " + insertCompNum + "\n" +
                 "Qsort compares count:  " + quickCompNum + "\n" +
