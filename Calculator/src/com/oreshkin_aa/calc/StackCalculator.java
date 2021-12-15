@@ -22,7 +22,7 @@ public class StackCalculator {
                 token.applyToStack(stack);
             }
             catch (EmptyStackException e) {
-                throw new Exception("Wrong expression!");
+                throw new Exception("Wrong expression! Cannot apply " + token);
             }
         }
         double result;
