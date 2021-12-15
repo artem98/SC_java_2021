@@ -1,5 +1,7 @@
 package com.oreshkin_aa.calc.tokens;
 
+import java.util.Stack;
+
 public class TokenBracket extends Token {
 
     public TokenBracket(boolean isOpening) {
@@ -30,5 +32,9 @@ public class TokenBracket extends Token {
     @Override
     protected void setPriority() {
         priority = new Priority(false, true, 0);
+    }
+
+    @Override
+    public void applyToStack(Stack<Double> stack) {
     }
 }

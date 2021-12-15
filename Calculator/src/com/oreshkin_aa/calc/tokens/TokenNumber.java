@@ -1,5 +1,7 @@
 package com.oreshkin_aa.calc.tokens;
 
+import java.util.Stack;
+
 public class TokenNumber extends Token {
 
     public TokenNumber(double value) {
@@ -26,5 +28,10 @@ public class TokenNumber extends Token {
     @Override
     protected void setPriority() {
         priority = new Priority();
+    }
+
+    @Override
+    public void applyToStack(Stack<Double> stack) {
+        stack.push(value);
     }
 }
