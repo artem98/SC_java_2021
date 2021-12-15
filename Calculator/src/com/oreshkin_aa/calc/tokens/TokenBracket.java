@@ -2,8 +2,13 @@ package com.oreshkin_aa.calc.tokens;
 
 public class TokenBracket extends Token {
 
+    public TokenBracket(boolean isOpening) {
+        super();
+
+        this.isOpening = isOpening;
+    }
+
     private boolean isOpening;
-    private boolean isClosing;
 
     public boolean isOpening() {
         return isOpening;
@@ -14,10 +19,16 @@ public class TokenBracket extends Token {
     }
 
     public boolean isClosing() {
-        return isClosing;
+        return !isOpening;
     }
 
-    public void setClosing(boolean closing) {
-        isClosing = closing;
+    @Override
+    public boolean shouldSendToStation() {
+        return true;
+    }
+
+    @Override
+    protected void setPriority() {
+        priority = new Priority(false, true, 0);
     }
 }
