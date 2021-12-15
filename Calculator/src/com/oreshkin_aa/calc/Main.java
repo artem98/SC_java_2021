@@ -10,7 +10,9 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+
+        Calculator calculator = new Calculator();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
@@ -23,36 +25,11 @@ public class Main {
             if(input.length() == 1 && input.charAt(0) == 'q')
                 break;
 
-            ExpressionParser parser = new ExpressionParser();
-            Queue<Token> queue;
+            double v;
             try {
-                queue = parser.parse(input);
+                v = calculator.calculate(input);
             }
             catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-                continue;
-            }
-
-            ArrayList<Token> list;
-            SortStation sortStation = new SortStation(queue);
-            try {
-                list = sortStation.getReversePolish();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-                continue;
-            }
-
-            StackCalculator calculator = new StackCalculator(list);
-            double v = 0;
-            try {
-                v = calculator.calculate();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
                 continue;
             }
 
