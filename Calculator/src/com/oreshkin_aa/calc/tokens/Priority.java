@@ -27,6 +27,9 @@ public class Priority {
      * @return
      */
     public boolean canStackOver(Priority rhs) {
+        if(rhs.priority < 0 || priority < 0)
+            return true;
+
         if(rhs.priority > priority)
             return false;
 

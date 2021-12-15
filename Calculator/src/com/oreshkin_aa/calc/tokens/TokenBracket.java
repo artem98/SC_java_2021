@@ -31,7 +31,7 @@ public class TokenBracket extends Token {
 
     @Override
     protected void setPriority() {
-        priority = new Priority(false, true, 0);
+        priority = new Priority(false, true, -1);
     }
 
     @Override
