@@ -17,5 +17,9 @@ public abstract class Token {
         return priority;
     }
 
+    public boolean canStackOver(Token token) {
+        return priority.canStackOver(token.getPriority());
+    }
+
     public abstract void applyToStack(Stack<Double> stack);
 }
