@@ -34,4 +34,11 @@ public class TokenNumber extends Token {
     public void applyToStack(Stack<Double> stack) {
         stack.push(value);
     }
+
+    @Override
+    public String toString() {
+        return "TokenNumber{" +
+                "value=" + value +
+                '}';
+    }
 }
