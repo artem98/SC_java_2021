@@ -29,33 +29,40 @@ public class BoardState {
         Random random = new Random(seed);
         for(int i = 0; i < stepNumber; i++) {
             ArrayList<BoardState> nbrs = neighbours();
-            System.out.println("STEP " + i);
-
-            System.out.println("");
             int newStateInd = Math.abs(random.nextInt()) % (nbrs.size());
             this.copyFrom(nbrs.get(newStateInd));
             System.out.println(this);
         }
     }
 
+    public int manhattanDist(BoardState rhs) {
+        if(rhs.size != size)
+            return Integer.MAX_VALUE;
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        String maxString = Integer.toString(N);
-        for(int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (cellToNum[i][j] == N) {
-                    builder.append(String.format(" %" + maxString.length() + "d", 1).replace('1', '*'));
-                    continue;
+        int result = 0;
+        //Here we sacrifice speed because we don't want to double memory size to store numberToCell array
+        for(int value = 0; value < N; value++) {
+            int ownI = 0;
+            int ownJ = 0;
+            int rhsI = 0;
+            int rhsJ = 0;
+            for(int i = 0; i < size; i++)
+                for(int j = 0; j < size; j++) {
+                    if(cellToNum[i][j] == value) {
+                        ownI = i;
+                        ownJ = j;
+                    }
+                    if(rhs.cellToNum[i][j] == value) {
+                        rhsI = i;
+                        rhsJ = j;
+                    }
                 }
-                String formatted = String.format(" %" + maxString.length() + "d", cellToNum[i][j]);
-                builder.append(formatted);
-            }
-            builder.append("\n");
+            result += Math.abs(ownI - rhsI) + Math.abs(ownJ - rhsJ);
         }
-        return builder.toString();
+        return result;
     }
+
+
 
     public ArrayList<BoardState> neighbours() {
         ArrayList<Position> nbrsOfEmptyCell = emptyCellPosition.neighbours();
@@ -146,6 +153,24 @@ public class BoardState {
     public boolean isInitState() {
         BoardState initState = new BoardState(this.size);
         return this.equals(initState);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        String maxString = Integer.toString(N);
+        for(int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (cellToNum[i][j] == N) {
+                    builder.append(String.format(" %" + maxString.length() + "d", 1).replace('1', '*'));
+                    continue;
+                }
+                String formatted = String.format(" %" + maxString.length() + "d", cellToNum[i][j]);
+                builder.append(formatted);
+            }
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 
     @Override
