@@ -4,8 +4,11 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        BoardState state = new BoardState(2);
+        BoardState state = new BoardState(3);
         System.out.println(state);
-        System.out.println(state.isInitState());
+        System.out.println("\nnbrs:");
+
+        state.randomShuffle(100, 55);
+        System.out.println(state);
     }
 }
