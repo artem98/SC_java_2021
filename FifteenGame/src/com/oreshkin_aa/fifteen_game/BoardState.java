@@ -37,18 +37,29 @@ public class BoardState {
         return builder.toString();
     }
 
+    public boolean isInitState() {
+        BoardState initState = new BoardState(this.size);
+        return this.equals(initState);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardState state = (BoardState) o;
-        return size == state.size && N == state.N && Arrays.equals(cellToNum, state.cellToNum);
+        boolean res = size == state.size;
+        for(int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                res = res && (cellToNum[i][j] == state.cellToNum[i][j]);
+        return res;
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(size);
-        result = 31 * result + Arrays.hashCode(cellToNum);
+            for(int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    result = 31 * result + cellToNum[i][j];
         return result;
     }
 }

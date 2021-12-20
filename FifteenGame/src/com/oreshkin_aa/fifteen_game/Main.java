@@ -4,7 +4,8 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        BoardState state = new BoardState(4);
+        BoardState state = new BoardState(2);
         System.out.println(state);
+        System.out.println(state.isInitState());
     }
 }
