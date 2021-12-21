@@ -31,7 +31,7 @@ public class BoardState {
             ArrayList<BoardState> nbrs = neighbours();
             int newStateInd = Math.abs(random.nextInt()) % (nbrs.size());
             this.copyFrom(nbrs.get(newStateInd));
-            System.out.println(this);
+//            System.out.println(this);
         }
     }
 
@@ -61,7 +61,6 @@ public class BoardState {
         }
         return result;
     }
-
 
 
     public ArrayList<BoardState> neighbours() {
