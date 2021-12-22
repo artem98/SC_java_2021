@@ -31,7 +31,7 @@ public class FifteenGameSolver {
         visited.add(new BoardStateInGraph(init));
     }
 
-    public void solve() {
+    public void solve(boolean doPrint) {
 
         BoardStateInGraph solution = null;
         BoardStateInGraph current;
@@ -68,11 +68,18 @@ public class FifteenGameSolver {
         for(current = solution; current != null; current = current.prev)
             solutionSequence.add(current);
 
+        if(!doPrint) {
+            System.out.println(solutionSequence.size() + " steps!");
+            return;
+        }
+
         Collections.reverse(solutionSequence);
 
         for(var stateInGraph : solutionSequence) {
             System.out.println(stateInGraph.state);
         }
+
+        System.out.println(solutionSequence.size() + " steps!");
     }
 
     private static class BoardStateInGraph {
