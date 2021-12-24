@@ -14,31 +14,16 @@ public class Grid {
     /**
      * Union-find structure for blocks
      */
-    private Connections connections;
+    private final Connections connections;
 
-    /**
-     * Component index in union find for blocks
-     */
-    private int[][] componentInd;
-
-    /**
-     * Component index in union find for virtual top block
-     */
-    private int topComponentInd;
     private final static int TOP_BLOCK_INDEX = -1;
-
-    /**
-     * Component index in union find for virtual bottom block
-     */
-    private int btmComponentInd;
     private final static int BTM_BLOCK_INDEX = -2;
 
     public Grid(int n, int seed) {
         N = n;
         isOpen = new char[n][n];
         random = new Random(seed);
-        connections = new Connections();
-        componentInd = new int[n][n];
+        connections = new Connections(n * n + 2);
 
         this.clear();
     }
@@ -68,30 +53,35 @@ public class Grid {
     }
 
     public void openBlock(Position pos) {
-        isOpen[pos.i][pos.j] = 1;
+        openBlock(pos.i, pos.j);
     }
 
     public void clear() {
         for(int i = 0; i < N; i++)
             for(int j = 0; j < N; j++) {
                 isOpen[i][j] = 0;
-                componentInd[i][j] = i * N + j + 1;
             }
         connections.clear();
         openedCount = 0;
-        this.topComponentInd = 0;
-        this.btmComponentInd = N * N + 1;
     }
 
+    private int getLinearIndex(Position pos) {
+        return getLinearIndex(pos.i, pos.j);
+    }
 
-    private int getComponentInd(int i, int j) {
+    private int getLinearIndex(int i, int j) {
         if(i == TOP_BLOCK_INDEX || j == TOP_BLOCK_INDEX)
-            return topComponentInd;
+            return 0;
 
         if(i == BTM_BLOCK_INDEX || j == BTM_BLOCK_INDEX)
-            return btmComponentInd;
+            return N * N + 1;
 
-        return componentInd[i][j];
+        return i * N + j + 1;
+    }
+
+    private int getComponentInd(int i, int j) {
+        int linearInd = getLinearIndex(i, j);
+        return connections.getComponent(linearInd);
     }
 
     private class Position {
