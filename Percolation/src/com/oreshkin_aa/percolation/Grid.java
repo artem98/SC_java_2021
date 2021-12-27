@@ -27,6 +27,19 @@ public class Grid {
 
         this.clear();
     }
+    
+    public double randomSingleTest() {
+        this.clear();
+
+        int i = 0;
+        while(!checkPercolation() && i < N * N) {
+            openRandomBlock();
+            i++;
+        }
+
+        double res = (double)i / (N * N);
+        return res;
+    }
 
     private Position getRandomClosedBlock() {
         if(openedCount == N * N)
