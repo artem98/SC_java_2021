@@ -32,7 +32,7 @@ public class Grid {
         if(openedCount == N * N)
             return null;
 
-        int randomStepsNumOverClosed = Math.abs(random.nextInt()) % (N - openedCount);
+        int randomStepsNumOverClosed = Math.abs(random.nextInt()) % (N * N - openedCount);
 
         int closedIter = 0;
         for(int i = 0; i < N; i++)
@@ -48,12 +48,40 @@ public class Grid {
         return null;
     }
 
+    public void openRandomBlock() {
+        openBlock(getRandomClosedBlock());
+    }
+
     public void openBlock(int i, int j) {
-        isOpen[i][j] = 1;
+        openBlock(new Position(i, j));
     }
 
     public void openBlock(Position pos) {
-        openBlock(pos.i, pos.j);
+        if(pos == null)
+            return;
+
+        if(isOpen[pos.i][pos.j] == 0)
+            openedCount++;
+        isOpen[pos.i][pos.j] = 1;
+
+        int ownComponent = getComponentInd(pos.i, pos.j);
+        var nbrs = pos.nbrs();
+        for(Position nbr : nbrs) {
+            if(!isOpen(nbr))
+                continue;
+            int nbrComponent = getComponentInd(nbr.i, nbr.j);
+            connections.union(ownComponent, nbrComponent);
+        }
+    }
+
+    public boolean isOpen(Position position) {
+        if (position.i == TOP_BLOCK_INDEX
+                || position.j == TOP_BLOCK_INDEX
+                || position.i == BTM_BLOCK_INDEX
+                || position.j == BTM_BLOCK_INDEX)
+            return true;
+
+        return isOpen[position.i][position.j] == 1;
     }
 
     public void clear() {
@@ -62,6 +90,19 @@ public class Grid {
                 isOpen[i][j] = 0;
             }
         connections.clear();
+        for(int j = 0; j < N; j++) {
+            int currBlockComp = getComponentInd(0, j);
+            int topBlockComp = getComponentInd(TOP_BLOCK_INDEX, TOP_BLOCK_INDEX);
+            connections.union(currBlockComp, topBlockComp);
+        }
+        for(int j = 0; j < N; j++) {
+            int currBlockComp = getComponentInd(N - 1, j);
+            int btmBlockComp = getComponentInd(BTM_BLOCK_INDEX, BTM_BLOCK_INDEX);
+            connections.union(currBlockComp, btmBlockComp);
+        }
+        int topComponent = getComponentInd(TOP_BLOCK_INDEX, TOP_BLOCK_INDEX);
+        int btmComponent = getComponentInd(BTM_BLOCK_INDEX, BTM_BLOCK_INDEX);
+
         openedCount = 0;
     }
 
@@ -77,6 +118,13 @@ public class Grid {
             return N * N + 1;
 
         return i * N + j + 1;
+    }
+
+    public boolean checkPercolation() {
+        int topComponent = getComponentInd(TOP_BLOCK_INDEX, TOP_BLOCK_INDEX);
+        int btmComponent = getComponentInd(BTM_BLOCK_INDEX, BTM_BLOCK_INDEX);
+
+        return topComponent == btmComponent;
     }
 
     private int getComponentInd(int i, int j) {

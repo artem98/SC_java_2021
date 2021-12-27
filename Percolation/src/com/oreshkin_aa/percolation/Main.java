@@ -3,9 +3,15 @@ package com.oreshkin_aa.percolation;
 public class Main {
 
     public static void main(String[] args) {
-        Grid grid = new Grid(28, 0);
-        grid.openBlock(2, 2);
-        grid.openBlock(2, 3);
+        int n = 8;
+        Grid grid = new Grid(n, 3);
+        int i = 0;
+        while(!grid.checkPercolation() && i < n * n) {
+            System.out.println(i);
+            grid.openRandomBlock();
+            i++;
+        }
         System.out.println(grid);
+        System.out.println(grid.checkPercolation());
     }
 }

@@ -17,7 +17,7 @@ public class Connections {
         if(parent[x] == x)
             return x;
 
-        int findRes = find(x);
+        int findRes = find(parent[x]);
         parent[x] = findRes;
         return findRes;
     }
@@ -45,6 +45,6 @@ public class Connections {
     }
 
     public int getComponent(int ind) {
-        return parent[ind];
+        return find(ind);
     }
 }
