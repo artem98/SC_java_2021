@@ -3,11 +3,10 @@ package com.oreshkin_aa.percolation;
 public class Main {
 
     public static void main(String[] args) {
-        int n = 10;
-        Grid grid = new Grid(n, 3);
+        int n = 100;
+        Grid grid = new Grid(n, 6);
 
-        System.out.println(grid.randomSingleTest());
-        System.out.println(grid.randomSingleTest());
-        System.out.println(grid.randomSingleTest());
+        Statistic stat = grid.randomMultipleTest(300);
+        System.out.println(stat);
     }
 }

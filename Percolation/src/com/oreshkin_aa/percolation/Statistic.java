@@ -29,4 +29,9 @@ public class Statistic {
             dispersion += (v - mean) * (v - mean);
         dispersion /= list.size();
     }
+
+    @Override
+    public String toString() {
+        return "Mean: " + mean + ", Dispersion: " + dispersion;
+    }
 }

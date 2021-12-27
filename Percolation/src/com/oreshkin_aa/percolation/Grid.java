@@ -28,6 +28,15 @@ public class Grid {
         this.clear();
     }
 
+    public Statistic randomMultipleTest(int testCount) {
+        ArrayList<Double> array = new ArrayList<>();
+
+        for(int testIt = 0; testIt < testCount; testIt++)
+            array.add(randomSingleTest());
+
+        return new Statistic(array);
+    }
+
     public double randomSingleTest() {
         this.clear();
 
