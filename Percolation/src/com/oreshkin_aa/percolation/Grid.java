@@ -27,7 +27,7 @@ public class Grid {
 
         this.clear();
     }
-    
+
     public double randomSingleTest() {
         this.clear();
 
